@@ -1,62 +1,359 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio - Nowoczesne, responsywne i profesjonalne portfolio" />
   <title>Portfolio - Twoje Imię</title>
-  <!-- Meta tagi SEO -->
-  <meta name="description" content="Portfolio - Twoje Imię. Projekty, umiejętności, doświadczenie.">
-  <meta name="keywords" content="portfolio, projekty, umiejętności, doświadczenie">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
-        integrity="sha512-Fo3rlrZj/kTcBJKxC7R5A+93T8bV8hzV0NTxZ0aqs5cYlt/gf3M5Kg+O9M/NW91Zt7F0X6DoxmlfVl14oQ8y2w==" 
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- AOS (Animate On Scroll) CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  
+  <!-- Style CSS -->
+  <style>
+    /* RESET i style podstawowe */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      background-color: #fff;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    /* Dark Mode */
+    body.dark {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #f8f8f8;
+    }
+    body.dark header {
+      background-color: #1e1e1e;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+    }
+    nav ul li {
+      margin-left: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: inherit;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #007BFF;
+    }
+    .cv-button {
+      margin-left: 20px;
+      padding: 8px 16px;
+      border: none;
+      background-color: #007BFF;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    /* Przycisk zmiany trybu (dark/light) */
+    .theme-toggle {
+      margin-left: 20px;
+      padding: 8px 16px;
+      border: none;
+      background-color: #555;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    /* Sekcje */
+    section {
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Sekcja "O mnie" */
+    #o-mnie {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    #o-mnie .profile-img {
+      flex: 1 1 250px;
+      text-align: center;
+      padding: 20px;
+    }
+    #o-mnie .profile-img img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    #o-mnie .about-text {
+      flex: 2 1 300px;
+      padding: 20px;
+    }
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .skill {
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .skill i {
+      margin-right: 5px;
+      color: #007BFF;
+    }
+    .more-info {
+      display: none;
+      margin-top: 10px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    /* Sekcja "Portfolio" */
+    #portfolio .filters {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #portfolio .filters button {
+      margin: 0 10px;
+      padding: 8px 16px;
+      border: none;
+      background-color: #e0e0e0;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    #portfolio .filters button.active,
+    #portfolio .filters button:hover {
+      background-color: #007BFF;
+      color: #fff;
+    }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .project {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background-color: #fff;
+      transition: transform 0.3s;
+    }
+    body.dark .project {
+      background-color: #1e1e1e;
+    }
+    .project:hover {
+      transform: scale(1.05);
+    }
+    .project img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .project-info {
+      padding: 15px;
+    }
+    .project-info h3 {
+      margin-bottom: 10px;
+    }
+    .project-info p {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    .project-info a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+    /* Sekcja "Usługi" */
+    #uslugi .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .service {
+      background-color: #f8f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    body.dark .service {
+      background-color: #2a2a2a;
+    }
+    .service:hover {
+      transform: translateY(-5px);
+    }
+    .service i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #007BFF;
+    }
+    /* Sekcja "Blog" */
+    #blog .posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .post {
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      transition: box-shadow 0.3s;
+    }
+    body.dark .post {
+      border-color: #444;
+    }
+    .post:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .post h3 {
+      margin-bottom: 10px;
+    }
+    .post p {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    .post a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+    /* Sekcja "Kontakt" */
+    #kontakt .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    #kontakt form {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+    }
+    #kontakt form input,
+    #kontakt form textarea {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #kontakt form button {
+      width: 150px;
+    }
+    #kontakt .contact-info {
+      flex: 1;
+    }
+    .social-icons a {
+      margin-right: 10px;
+      font-size: 1.5rem;
+      color: inherit;
+      text-decoration: none;
+    }
+    /* STOPKA */
+    footer {
+      background-color: #f8f8f8;
+      text-align: center;
+      padding: 20px;
+    }
+    body.dark footer {
+      background-color: #1e1e1e;
+    }
+    footer a {
+      color: inherit;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+    /* Responsywność */
+    @media (max-width: 768px) {
+      #o-mnie {
+        flex-direction: column;
+      }
+      header {
+        flex-direction: column;
+      }
+      nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+      }
+      nav ul li {
+        margin: 5px 0;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Przycisk przełączający Dark/Light Mode -->
-  <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Przełącz tryb ciemny/jasny">Tryb ciemny</button>
-  
-  <!-- Nagłówek -->
-  <header role="banner">
+  <!-- HEADER -->
+  <header>
     <div class="logo">Twoje Logo</div>
-    <nav aria-label="Główna nawigacja">
+    <nav>
       <ul>
         <li><a href="#o-mnie">O mnie</a></li>
         <li><a href="#portfolio">Portfolio</a></li>
         <li><a href="#uslugi">Usługi</a></li>
         <li><a href="#blog">Blog</a></li>
-        <li><a href="#opinie">Opinie</a></li>
         <li><a href="#kontakt">Kontakt</a></li>
       </ul>
     </nav>
-    <a href="cv.pdf" class="btn-cv" download>CV</a>
+    <div>
+      <a class="cv-button" href="cv.pdf" download>CV</a>
+      <button class="theme-toggle" id="theme-toggle">Dark Mode</button>
+    </div>
   </header>
   
-  <!-- Główna zawartość -->
+  <!-- GŁÓWNA TREŚĆ -->
   <main>
     <!-- Sekcja "O mnie" -->
     <section id="o-mnie">
-      <h2 class="section-title" data-aos="fade-up">O mnie</h2>
-      <div class="about" data-aos="fade-up">
-        <img src="images/profile.jpg" alt="Zdjęcie profilowe" loading="lazy">
-        <div class="info">
-          <p>Cześć, jestem [Twoje Imię]. Jestem web developerem i projektantem UX/UI z doświadczeniem w tworzeniu nowoczesnych stron internetowych.</p>
+      <div class="container">
+        <div class="profile-img">
+          <!-- Upewnij się, że ścieżka do zdjęcia jest poprawna -->
+          <img src="profile.jpg" alt="Zdjęcie profilowe" loading="lazy" />
+        </div>
+        <div class="about-text">
+          <h2>Cześć, jestem [Twoje Imię]</h2>
+          <p>
+            Jestem pasjonatem tworzenia stron internetowych oraz projektowania UX/UI. Posiadam doświadczenie w pracy z HTML, CSS, JavaScript i nowoczesnymi frameworkami.
+          </p>
           <div class="skills">
-            <div class="skill"><i class="fab fa-html5"></i> HTML5</div>
-            <div class="skill"><i class="fab fa-css3-alt"></i> CSS3</div>
-            <div class="skill"><i class="fab fa-js"></i> JavaScript</div>
-            <div class="skill"><i class="fab fa-react"></i> React</div>
-            <div class="skill"><i class="fas fa-pencil-ruler"></i> UX/UI Design</div>
+            <div class="skill"><i class="fab fa-html5"></i>HTML</div>
+            <div class="skill"><i class="fab fa-css3-alt"></i>CSS</div>
+            <div class="skill"><i class="fab fa-js"></i>JavaScript</div>
+            <div class="skill"><i class="fab fa-react"></i>React</div>
+            <div class="skill"><i class="fas fa-pencil-ruler"></i>UX/UI</div>
           </div>
-          <button id="moreAboutBtn">Więcej o mnie</button>
-          <div class="more-info" id="moreInfo">
-            <p>Tu możesz dodać dodatkowe informacje o sobie, swoich doświadczeniach, edukacji, certyfikatach itp.</p>
+          <button class="btn" id="more-btn">Więcej o mnie</button>
+          <div class="more-info" id="more-info">
+            <p>Dodatkowe informacje o moim doświadczeniu, projektach i zainteresowaniach.</p>
           </div>
         </div>
       </div>
@@ -64,39 +361,50 @@
     
     <!-- Sekcja "Portfolio" -->
     <section id="portfolio">
-      <h2 class="section-title" data-aos="fade-up">Portfolio</h2>
-      <div class="portfolio-filters" data-aos="fade-up">
-        <button class="filter-btn active" data-filter="all">Wszystkie</button>
-        <button class="filter-btn" data-filter="web">Web Development</button>
-        <button class="filter-btn" data-filter="design">Design</button>
-        <button class="filter-btn" data-filter="other">Inne</button>
-      </div>
-      <div class="portfolio-gallery" data-aos="fade-up">
-        <!-- Projekt 1 -->
-        <div class="project" data-category="web">
-          <img src="images/project1.jpg" alt="Projekt 1" loading="lazy">
-          <div class="project-description">
-            <h3>Projekt 1</h3>
-            <p>Krótki opis projektu 1.</p>
-            <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-          </div>
+      <div class="container">
+        <h2>Portfolio</h2>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">Wszystkie</button>
+          <button class="filter-btn" data-filter="web">Web Development</button>
+          <button class="filter-btn" data-filter="design">Design</button>
+          <button class="filter-btn" data-filter="other">Inne</button>
         </div>
-        <!-- Projekt 2 -->
-        <div class="project" data-category="design">
-          <img src="images/project2.jpg" alt="Projekt 2" loading="lazy">
-          <div class="project-description">
-            <h3>Projekt 2</h3>
-            <p>Krótki opis projektu 2.</p>
-            <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <div class="projects">
+          <!-- Projekt 1 -->
+          <div class="project" data-category="web">
+            <img src="project1.jpg" alt="Projekt 1" loading="lazy" />
+            <div class="project-info">
+              <h3>Projekt 1</h3>
+              <p>Opis projektu 1.</p>
+              <a href="#" target="_blank">Live Demo</a> | <a href="#" target="_blank">GitHub</a>
+            </div>
           </div>
-        </div>
-        <!-- Projekt 3 -->
-        <div class="project" data-category="other">
-          <img src="images/project3.jpg" alt="Projekt 3" loading="lazy">
-          <div class="project-description">
-            <h3>Projekt 3</h3>
-            <p>Krótki opis projektu 3.</p>
-            <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+          <!-- Projekt 2 -->
+          <div class="project" data-category="design">
+            <img src="project2.jpg" alt="Projekt 2" loading="lazy" />
+            <div class="project-info">
+              <h3>Projekt 2</h3>
+              <p>Opis projektu 2.</p>
+              <a href="#" target="_blank">Live Demo</a> | <a href="#" target="_blank">GitHub</a>
+            </div>
+          </div>
+          <!-- Projekt 3 -->
+          <div class="project" data-category="other">
+            <img src="project3.jpg" alt="Projekt 3" loading="lazy" />
+            <div class="project-info">
+              <h3>Projekt 3</h3>
+              <p>Opis projektu 3.</p>
+              <a href="#" target="_blank">Live Demo</a> | <a href="#" target="_blank">GitHub</a>
+            </div>
+          </div>
+          <!-- Projekt 4 -->
+          <div class="project" data-category="web">
+            <img src="project4.jpg" alt="Projekt 4" loading="lazy" />
+            <div class="project-info">
+              <h3>Projekt 4</h3>
+              <p>Opis projektu 4.</p>
+              <a href="#" target="_blank">Live Demo</a> | <a href="#" target="_blank">GitHub</a>
+            </div>
           </div>
         </div>
       </div>
@@ -104,104 +412,148 @@
     
     <!-- Sekcja "Usługi" -->
     <section id="uslugi">
-      <h2 class="section-title" data-aos="fade-up">Usługi</h2>
-      <div class="services" data-aos="fade-up">
-        <div class="service">
-          <i class="fas fa-code"></i>
-          <h3>Tworzenie stron internetowych</h3>
-          <p>Nowoczesne i responsywne strony internetowe.</p>
-          <button class="btn-service">Dowiedz się więcej</button>
-        </div>
-        <div class="service">
-          <i class="fas fa-paint-brush"></i>
-          <h3>Projektowanie UX/UI</h3>
-          <p>Intuicyjne i estetyczne projekty interfejsów.</p>
-          <button class="btn-service">Dowiedz się więcej</button>
-        </div>
-        <div class="service">
-          <i class="fas fa-search"></i>
-          <h3>Optymalizacja SEO</h3>
-          <p>Zwiększ widoczność swojej strony w wyszukiwarkach.</p>
-          <button class="btn-service">Dowiedz się więcej</button>
+      <div class="container">
+        <h2>Usługi</h2>
+        <div class="services">
+          <!-- Usługa 1 -->
+          <div class="service">
+            <i class="fas fa-code"></i>
+            <h3>Tworzenie stron internetowych</h3>
+            <p>Nowoczesne i responsywne strony dostosowane do Twoich potrzeb.</p>
+            <button class="btn">Dowiedz się więcej</button>
+          </div>
+          <!-- Usługa 2 -->
+          <div class="service">
+            <i class="fas fa-palette"></i>
+            <h3>Projektowanie UX/UI</h3>
+            <p>Projektowanie interfejsów łączących estetykę z funkcjonalnością.</p>
+            <button class="btn">Dowiedz się więcej</button>
+          </div>
+          <!-- Usługa 3 -->
+          <div class="service">
+            <i class="fas fa-search"></i>
+            <h3>Optymalizacja SEO</h3>
+            <p>Popraw widoczność swojej strony w wyszukiwarkach dzięki optymalizacji.</p>
+            <button class="btn">Dowiedz się więcej</button>
+          </div>
         </div>
       </div>
     </section>
     
-    <!-- Sekcja "Blog" -->
+    <!-- Sekcja "Blog" (opcjonalnie) -->
     <section id="blog">
-      <h2 class="section-title" data-aos="fade-up">Blog</h2>
-      <div class="blog-posts" data-aos="fade-up">
-        <div class="blog-post">
-          <h3>Tytuł wpisu blogowego</h3>
-          <p><small>Data publikacji: 2025-02-25</small></p>
-          <p>Krótki opis wpisu blogowego...</p>
-          <a href="#">Czytaj więcej</a>
+      <div class="container">
+        <h2>Blog</h2>
+        <div class="posts">
+          <!-- Wpis 1 -->
+          <div class="post">
+            <h3>Tytuł wpisu 1</h3>
+            <small>01.01.2025</small>
+            <p>Krótki opis wpisu blogowego numer 1.</p>
+            <a href="#">Czytaj więcej</a>
+          </div>
+          <!-- Wpis 2 -->
+          <div class="post">
+            <h3>Tytuł wpisu 2</h3>
+            <small>15.01.2025</small>
+            <p>Krótki opis wpisu blogowego numer 2.</p>
+            <a href="#">Czytaj więcej</a>
+          </div>
         </div>
-        <!-- Dodaj kolejne wpisy -->
-      </div>
-    </section>
-    
-    <!-- Sekcja "Opinie" -->
-    <section id="opinie">
-      <h2 class="section-title" data-aos="fade-up">Opinie</h2>
-      <div class="testimonials" data-aos="fade-up">
-        <div class="testimonial active" data-aos="fade-up">
-          <p>"Świetna współpraca, profesjonalizm i terminowość. Polecam!"</p>
-          <span>- Jan Kowalski, Klient</span>
-        </div>
-        <div class="testimonial" data-aos="fade-up">
-          <p>"Bardzo kreatywne podejście do projektów. Zdecydowanie warto skorzystać z usług."</p>
-          <span>- Anna Nowak, Klientka</span>
-        </div>
-        <!-- Dodaj kolejne opinie, jeśli potrzebne -->
-        <button id="prevTestimonial" class="testimonial-slider-btn" aria-label="Poprzednia opinia">&lt;</button>
-        <button id="nextTestimonial" class="testimonial-slider-btn" aria-label="Następna opinia">&gt;</button>
       </div>
     </section>
     
     <!-- Sekcja "Kontakt" -->
     <section id="kontakt">
-      <h2 class="section-title" data-aos="fade-up">Kontakt</h2>
-      <div class="contact" data-aos="fade-up">
-        <!-- Formularz kontaktowy -->
-        <div class="contact-form">
-          <form id="contactForm">
-            <input type="text" name="name" placeholder="Imię i nazwisko" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="text" name="subject" placeholder="Temat" required>
+      <div class="container">
+        <h2>Kontakt</h2>
+        <div class="contact-container">
+          <form id="contact-form">
+            <input type="text" name="name" placeholder="Imię i nazwisko" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="text" name="subject" placeholder="Temat" required />
             <textarea name="message" rows="5" placeholder="Wiadomość" required></textarea>
-            <button type="submit">Wyślij</button>
+            <button type="submit" class="btn">Wyślij</button>
           </form>
-          <div id="formMessage"></div>
-        </div>
-        <!-- Dane kontaktowe -->
-        <div class="contact-info">
-          <p>Email: <a href="mailto:example@example.com">example@example.com</a></p>
-          <p>Telefon: +48 123 456 789</p>
-          <p>Adres: Ulica, Miasto, Kraj</p>
-          <div class="social-links">
-            <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> email@example.com</p>
+            <p><i class="fas fa-phone"></i> +48 123 456 789</p>
+            <p><i class="fas fa-map-marker-alt"></i> Adres, Miasto</p>
+            <div class="social-icons">
+              <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            </div>
           </div>
         </div>
       </div>
     </section>
   </main>
   
-  <!-- Stopka -->
+  <!-- STOPKA -->
   <footer>
     <p>© 2025 Twoje Imię. Wszystkie prawa zastrzeżone.</p>
     <p>
-      <a href="#">Polityka prywatności</a> |
-      <a href="#">Warunki korzystania</a>
+      <a href="#">Polityka prywatności</a> | <a href="#">Warunki korzystania</a>
     </p>
   </footer>
   
   <!-- Skrypty JavaScript -->
-  <!-- AOS (Animate On Scroll) JS -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <!-- Custom JS -->
-  <script src="js/script.js"></script>
+  <script>
+    // Przełącznik trybu Dark/Light
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      themeToggle.textContent = document.body.classList.contains('dark')
+        ? 'Light Mode'
+        : 'Dark Mode';
+    });
+    
+    // Rozwijanie sekcji "Więcej o mnie"
+    const moreBtn = document.getElementById('more-btn');
+    const moreInfo = document.getElementById('more-info');
+    moreBtn.addEventListener('click', () => {
+      if (moreInfo.style.display === 'block') {
+        moreInfo.style.display = 'none';
+        moreBtn.textContent = 'Więcej o mnie';
+      } else {
+        moreInfo.style.display = 'block';
+        moreBtn.textContent = 'Mniej';
+      }
+    });
+    
+    // Filtrowanie projektów w portfolio
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project');
+    
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Usunięcie klasy active ze wszystkich przycisków
+        filterButtons.forEach(button => button.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+        projects.forEach(project => {
+          if (filter === 'all' || project.getAttribute('data-category') === filter) {
+            project.style.display = 'block';
+          } else {
+            project.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // Obsługa wysyłania formularza kontaktowego przez AJAX
+    const contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Przygotowanie danych formularza
+      const formData = new FormData(contactForm);
+      // Tutaj możesz dodać funkcję fetch lub XMLHttpRequest, aby wysłać dane na serwer.
+      alert('Wiadomość została wysłana!');
+      contactForm.reset();
+    });
+    
+    // Lazy loading obrazków obsługiwany jest przez atrybut "loading" w tagach img.
+  </script>
 </body>
 </html>
